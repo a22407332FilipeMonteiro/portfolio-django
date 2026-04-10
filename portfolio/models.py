@@ -8,7 +8,7 @@ class Licenciatura(models.Model):
     universidade = models.CharField(max_length=100)
     duracao_anos = models.IntegerField()
     ects_total = models.IntegerField(default=0)
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True)
     url_oficial = models.URLField(blank=True, default='')
 
     class Meta:
@@ -39,7 +39,7 @@ class UnidadeCurricular(models.Model):
     nome = models.CharField(max_length=100)
     ano = models.IntegerField()
     semestre = models.IntegerField()
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True)
     imagem = models.ImageField(upload_to='ucs/', null=True, blank=True)
 
     licenciatura = models.ForeignKey(Licenciatura, on_delete=models.CASCADE)
@@ -59,7 +59,7 @@ class Tecnologia(models.Model):
 
     nome = models.CharField(max_length=100)
     tipo = models.CharField(max_length=50)  # ex: Linguagem, Framework, Ferramenta, BD
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True)
     logo = models.ImageField(upload_to='tecnologias/', null=True, blank=True)
     website = models.URLField()
     nivel_interesse = models.IntegerField(choices=NIVEL_CHOICES, default=3)  # 1-5
@@ -79,7 +79,7 @@ class Competencia(models.Model):
     nome = models.CharField(max_length=100)
     tipo = models.CharField(max_length=50)  # ex: Técnica, Soft Skill, Linguística
     nivel = models.IntegerField(choices=NIVEL_CHOICES, default=3)  # 1-5
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True)
 
     class Meta:
         verbose_name = 'Competência'
@@ -92,7 +92,7 @@ class Competencia(models.Model):
 # Projeto
 class Projeto(models.Model):
     nome = models.CharField(max_length=100)
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True)
     data_inicio = models.DateField()
     data_fim = models.DateField(null=True, blank=True)
     github = models.URLField()
@@ -120,7 +120,7 @@ class Formacao(models.Model):
     instituicao = models.CharField(max_length=100)
     data_inicio = models.DateField()
     data_fim = models.DateField()
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True)
 
     competencias = models.ManyToManyField(Competencia, blank=True)
     tecnologias = models.ManyToManyField(Tecnologia, blank=True)
@@ -139,7 +139,7 @@ class TFC(models.Model):
     titulo = models.CharField(max_length=200)
     autor = models.CharField(max_length=100)
     ano = models.IntegerField()
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True)
     area = models.CharField(max_length=100)
     link = models.URLField()
     destaque = models.BooleanField(default=False)
@@ -160,7 +160,7 @@ class ExperienciaProfissional(models.Model):
     cargo = models.CharField(max_length=100)
     data_inicio = models.DateField()
     data_fim = models.DateField(null=True, blank=True)
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True)
 
     competencias = models.ManyToManyField(Competencia, blank=True)
     tecnologias = models.ManyToManyField(Tecnologia, blank=True)
@@ -176,7 +176,7 @@ class ExperienciaProfissional(models.Model):
 # Making Of
 class MakingOf(models.Model):
     titulo = models.CharField(max_length=100)
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True)
     data = models.DateField()
     imagem = models.ImageField(upload_to='makingof/', null=True, blank=True)
     tipo = models.CharField(max_length=50)  # ex: Modelação, Implementação, Erro, Decisão
