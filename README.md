@@ -1,5 +1,5 @@
 # portfolio-django
 Personal Portfolio in Django
 
-Username: Admin
+Username: Admin | 
 Pass: Admin123
