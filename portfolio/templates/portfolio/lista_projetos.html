@@ -21,10 +21,15 @@
                         {{ projeto.unidade_curricular.nome }}
                     </p>
                     <p style="font-size: 0.9em; margin-bottom: 12px;">{{ projeto.descricao|truncatewords:20 }}</p>
-                    <div>
+                    <div style="margin-bottom: 12px;">
                         {% for tec in projeto.tecnologias.all %}
                             <span style="display: inline-block; background: #0071e3; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.75em; margin: 2px;">{{ tec.nome }}</span>
                         {% endfor %}
+                    </div>
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <a href="{% url 'portfolio:editar_projeto' projeto.id %}" 
+                           class="btn btn-secondary" 
+                           style="font-size: 0.85em; padding: 6px 14px;">Editar</a>
                     </div>
                 </div>
             {% endfor %}

@@ -32,6 +32,19 @@
 **Decisão:** Reutilizar o mesmo template `form_projeto.html` para criar e editar projetos, passando um título dinâmico via contexto.
 
 
+## Commit 3 — Editar Projeto | 28/04/2026
+
+**Commit:** `feat(portfolio): adicionar edição de projetos`
+
+**O que fiz:**
+- Adicionei a view `editar_projeto` reutilizando `ProjetoForm`.
+- Adicionei a rota `projetos/<int:id>/editar/`.
+- Adicionei botão "Editar" em cada cartão da listagem.
+
+**Decisão:** Reutilizei o template `form_projeto.html` (do commit 2) para a edição, mudando apenas o título via contexto. Reduz duplicação de código.
+
+**Aprendizagem:** O `ModelForm` com `instance=projeto` pré-preenche o formulário e atualiza o objeto certo na BD. Sem o `instance`, o `form.save()` criaria um registo novo em vez de atualizar.
+
 
 
 

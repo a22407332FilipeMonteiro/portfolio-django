@@ -1,6 +1,6 @@
 # portfolio/views.py
 
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Projeto
 from .forms import ProjetoForm
 
@@ -25,4 +25,21 @@ def criar_projeto(request):
     return render(request, 'portfolio/form_projeto.html', {
         'form': form,
         'titulo': 'Novo Projeto',
+    })
+
+
+def editar_projeto(request, id):
+    projeto = get_object_or_404(Projeto, id=id)
+
+    if request.method == 'POST':
+        form = ProjetoForm(request.POST, request.FILES, instance=projeto)
+        if form.is_valid():
+            form.save()
+            return redirect('portfolio:lista_projetos')
+    else:
+        form = ProjetoForm(instance=projeto)
+    
+    return render(request, 'portfolio/form_projeto.html', {
+        'form': form,
+        'titulo': f'Editar: {projeto.nome}',
     })

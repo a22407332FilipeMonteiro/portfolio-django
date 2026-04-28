@@ -8,5 +8,6 @@ app_name = 'portfolio'
 urlpatterns = [
     path('', views.lista_projetos, name='lista_projetos'),
     path('projetos/', views.lista_projetos, name='projetos'),
-    path('projetos/novo/', views.criar_projeto, name='criar_projeto'),  # NOVO
+    path('projetos/novo/', views.criar_projeto, name='criar_projeto'),  
+    path('projetos/<int:id>/editar/', views.editar_projeto, name='editar_projeto'),  
 ]
