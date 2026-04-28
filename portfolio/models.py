@@ -51,6 +51,20 @@ class UnidadeCurricular(models.Model):
 
     def __str__(self):
         return self.nome
+    
+
+# Tipo (para classificar Tecnologias), tem de estar antes da class Tecnologia
+class Tipo(models.Model):
+    nome = models.CharField(max_length=50, unique=True)
+    descricao = models.CharField(max_length=200, blank=True)
+
+    class Meta:
+        verbose_name = 'Tipo'
+        verbose_name_plural = 'Tipos'
+        ordering = ['nome']
+
+    def __str__(self):
+        return self.nome
 
 
 # Tecnologia
@@ -58,11 +72,11 @@ class Tecnologia(models.Model):
     NIVEL_CHOICES = [(i, str(i)) for i in range(1, 6)]
 
     nome = models.CharField(max_length=100)
-    tipo = models.CharField(max_length=50)  # ex: Linguagem, Framework, Ferramenta, BD
+    tipo = models.ForeignKey(Tipo, on_delete=models.SET_NULL, null=True, blank=True, related_name='tecnologias')
     descricao = models.TextField(blank=True)
     logo = models.ImageField(upload_to='tecnologias/', null=True, blank=True)
     website = models.URLField()
-    nivel_interesse = models.IntegerField(choices=NIVEL_CHOICES, default=3)  # 1-5
+    nivel_interesse = models.IntegerField(choices=NIVEL_CHOICES, default=3)  
 
     class Meta:
         verbose_name = 'Tecnologia'
@@ -77,8 +91,8 @@ class Competencia(models.Model):
     NIVEL_CHOICES = [(i, str(i)) for i in range(1, 6)]
 
     nome = models.CharField(max_length=100)
-    tipo = models.CharField(max_length=50)  # ex: Técnica, Soft Skill, Linguística
-    nivel = models.IntegerField(choices=NIVEL_CHOICES, default=3)  # 1-5
+    tipo = models.CharField(max_length=50)  
+    nivel = models.IntegerField(choices=NIVEL_CHOICES, default=3)  
     descricao = models.TextField(blank=True)
 
     class Meta:
@@ -154,7 +168,7 @@ class TFC(models.Model):
         return self.titulo
 
 
-# Experiencia Profissional (entidade extra obrigatória)
+# Experiencia Profissional 
 class ExperienciaProfissional(models.Model):
     empresa = models.CharField(max_length=100)
     cargo = models.CharField(max_length=100)

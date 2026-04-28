@@ -127,3 +127,21 @@ evitar conflitos entre templates de apps diferentes com o mesmo nome.
 **Decisão:** Estendi a `WHITELIST_TAGS` do exemplo da ficha com `code`, `pre`, `br` e `hr` para suportar blocos de código nos apontamentos técnicos.
 
 
+
+
+## Commit 9 — Classe Tipo para Tecnologias | 28/04/2026
+
+**Commit:** `feat(portfolio): criar entidade Tipo para classificar Tecnologias`
+
+**O que fiz:**
+- Criei o modelo `Tipo` com `nome` e `descricao`.
+- Mudei `Tecnologia.tipo` de `CharField` para `ForeignKey(Tipo)`.
+- Criei migração de dados com os 5 tipos iniciais.
+
+**Dificuldade:** Ao correr `migrate`, deu um `IntegrityError` porque a tecnologia que tinha na BD usava o campo antigo (texto livre como "Linguagem") e o Django não conseguia converter para um ID de Tipo. Resolvi apagando a BD (`db.sqlite3`) e as migrações novas, recriando-as do zero.
+
+**Decisão:** Usei `on_delete=SET_NULL` para que apagar um tipo não apague tecnologias associadas.
+
+**Aprendizagem:** Aprendi a criar **migrações de dados** (`RunPython`). É melhor que criar manualmente no admin porque os dados ficam versionados no código e funcionam em qualquer ambiente.
+
+
