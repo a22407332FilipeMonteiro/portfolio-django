@@ -1,8 +1,10 @@
 # portfolio/views.py
 
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Projeto
-from .forms import ProjetoForm
+from .models import Projeto , Tecnologia
+from .forms import ProjetoForm , TecnologiaForm
+
+
 
 
 def lista_projetos(request):
@@ -53,4 +55,59 @@ def apagar_projeto(request, id):
     
     return render(request, 'portfolio/apagar_projeto.html', {
         'projeto': projeto,
+    })
+
+
+# ============ TECNOLOGIAS ============
+
+def lista_tecnologias(request):
+    tecnologias = Tecnologia.objects.all()
+    return render(request, 'portfolio/lista_tecnologias.html', {'tecnologias': tecnologias})
+
+
+def criar_tecnologia(request):
+    if request.method == 'POST':
+        form = TecnologiaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('portfolio:lista_tecnologias')
+    else:
+        form = TecnologiaForm()
+    
+    return render(request, 'portfolio/form_generico.html', {
+        'form': form,
+        'titulo': 'Nova Tecnologia',
+        'voltar_url': 'portfolio:lista_tecnologias',
+    })
+
+
+def editar_tecnologia(request, id):
+    tecnologia = get_object_or_404(Tecnologia, id=id)
+
+    if request.method == 'POST':
+        form = TecnologiaForm(request.POST, request.FILES, instance=tecnologia)
+        if form.is_valid():
+            form.save()
+            return redirect('portfolio:lista_tecnologias')
+    else:
+        form = TecnologiaForm(instance=tecnologia)
+    
+    return render(request, 'portfolio/form_generico.html', {
+        'form': form,
+        'titulo': f'Editar: {tecnologia.nome}',
+        'voltar_url': 'portfolio:lista_tecnologias',
+    })
+
+
+def apagar_tecnologia(request, id):
+    tecnologia = get_object_or_404(Tecnologia, id=id)
+
+    if request.method == 'POST':
+        tecnologia.delete()
+        return redirect('portfolio:lista_tecnologias')
+    
+    return render(request, 'portfolio/apagar_generico.html', {
+        'objeto': tecnologia,
+        'tipo': 'tecnologia',
+        'voltar_url': 'portfolio:lista_tecnologias',
     })

@@ -60,3 +60,18 @@
 **Decisão:** Em vez de apagar diretamente num link (GET), usei uma página intermédia com formulário POST. Mais seguro: protege contra cliques acidentais e respeita o princípio REST de que pedidos GET não devem alterar dados.
 
 **CRUD completo:** Com este commit, o CRUD dos Projetos fica completo (Create, Read, Update, Delete).
+
+
+
+## Commit 5 — CRUD Tecnologias | 28/04/2026
+
+**Commit:** `feat(portfolio): adicionar CRUD completo de Tecnologias`
+
+**O que fiz:**
+- Implementei CRUD completo de Tecnologias (criar, editar, apagar).
+- Criei templates **genéricos** (`form_generico.html` e `apagar_generico.html`) reutilizáveis.
+- Adicionei "Tecnologias" no menu de navegação.
+
+**Decisão importante:** Em vez de criar templates específicos para cada classe (`form_tecnologia.html`, `apagar_tecnologia.html`, etc.), criei templates genéricos que recebem `titulo`, `objeto` e `voltar_url` por contexto. Isto vai poupar muito código nos próximos CRUDs (Competências e Formações).
+
+**Vantagem do Django:** O facto de o `ModelForm` gerar o formulário automaticamente a partir do modelo, e os templates genéricos iterarem sobre `form.fields`, permite reutilizar 100% do código entre diferentes entidades. Só precisei de definir o form e a view — o resto é genérico.

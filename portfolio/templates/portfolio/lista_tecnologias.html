@@ -1,0 +1,48 @@
+<!-- portfolio/templates/portfolio/lista_tecnologias.html -->
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Tecnologias{% endblock %}
+
+{% block content %}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h2>Tecnologias</h2>
+        <a href="{% url 'portfolio:criar_tecnologia' %}" class="btn">+ Nova Tecnologia</a>
+    </div>
+
+    {% if tecnologias %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+            {% for tec in tecnologias %}
+                <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    {% if tec.logo %}
+                        <img src="{{ tec.logo.url }}" alt="{{ tec.nome }}" 
+                             style="width: 60px; height: 60px; object-fit: contain; margin-bottom: 12px;">
+                    {% endif %}
+                    <h3>{{ tec.nome }}</h3>
+                    <p style="color: #86868b; font-size: 0.85em; margin: 6px 0;">
+                        {{ tec.tipo }} · Nível {{ tec.nivel_interesse }}/5
+                    </p>
+                    <p style="font-size: 0.9em; margin-bottom: 12px;">
+                        {{ tec.descricao|truncatewords:15 }}
+                    </p>
+                    {% if tec.website %}
+                        <p style="font-size: 0.85em; margin-bottom: 12px;">
+                            <a href="{{ tec.website }}" target="_blank" style="color: #0071e3;">🌐 Website</a>
+                        </p>
+                    {% endif %}
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <a href="{% url 'portfolio:editar_tecnologia' tec.id %}" 
+                           class="btn btn-secondary" 
+                           style="font-size: 0.85em; padding: 6px 14px;">Editar</a>
+                        <a href="{% url 'portfolio:apagar_tecnologia' tec.id %}" 
+                           class="btn btn-danger" 
+                           style="font-size: 0.85em; padding: 6px 14px;">Apagar</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p style="text-align: center; color: #86868b; padding: 40px;">
+            Ainda não há tecnologias. Adiciona a primeira!
+        </p>
+    {% endif %}
+{% endblock %}

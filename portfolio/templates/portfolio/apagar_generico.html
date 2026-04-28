@@ -1,0 +1,28 @@
+<!-- portfolio/templates/portfolio/apagar_generico.html -->
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Apagar {{ tipo|capfirst }}{% endblock %}
+
+{% block content %}
+    <div style="max-width: 600px; margin: 0 auto;">
+        <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center;">
+            <h2 style="color: #ff3b30; margin-bottom: 20px;">⚠️ Apagar {{ tipo|capfirst }}</h2>
+            
+            <p style="font-size: 1.1em; margin-bottom: 10px;">
+                Tens a certeza que queres apagar:
+            </p>
+            <p style="font-size: 1.3em; font-weight: 600; margin-bottom: 30px;">
+                "{{ objeto }}"?
+            </p>
+            <p style="color: #86868b; font-size: 0.9em; margin-bottom: 30px;">
+                Esta ação é irreversível.
+            </p>
+
+            <form method="post" style="display: inline-block;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Sim, apagar</button>
+                <a href="{% url voltar_url %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

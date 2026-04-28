@@ -1,7 +1,7 @@
 # portfolio/forms.py
 
 from django import forms
-from .models import Projeto
+from .models import Projeto, Tecnologia
 
 
 class ProjetoForm(forms.ModelForm):
@@ -28,3 +28,34 @@ class ProjetoForm(forms.ModelForm):
             'tecnologias': forms.CheckboxSelectMultiple(),
             'competencias': forms.CheckboxSelectMultiple(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['video'].required = False
+        self.fields['demo'].required = False
+        self.fields['data_fim'].required = False
+        self.fields['imagem'].required = False
+        self.fields['descricao'].required = False
+        self.fields['tecnologias'].required = False
+        self.fields['competencias'].required = False
+
+
+class TecnologiaForm(forms.ModelForm):
+    class Meta:
+        model = Tecnologia
+        fields = [
+            'nome',
+            'tipo',
+            'descricao',
+            'logo',
+            'website',
+            'nivel_interesse',
+        ]
+        widgets = {
+            'descricao': forms.Textarea(attrs={'rows': 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['descricao'].required = False
+        self.fields['logo'].required = False
