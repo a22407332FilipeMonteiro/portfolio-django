@@ -35,6 +35,10 @@ urlpatterns = [
     path('formacoes/<int:id>/editar/', views.editar_formacao, name='editar_formacao'),
     path('formacoes/<int:id>/apagar/', views.apagar_formacao, name='apagar_formacao'),
     
-
+    # Makingof
     path('makingof/', views.lista_makingof, name='lista_makingof'),
+
+
+    # Sobre
+    path('sobre/', views.sobre, name='sobre'),
 ]

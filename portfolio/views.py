@@ -1,8 +1,8 @@
 # portfolio/views.py
 
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Formacao, MakingOf, Projeto , Tecnologia , Competencia
-from .forms import FormacaoForm, ProjetoForm , TecnologiaForm , CompetenciaForm
+from .models import Formacao, MakingOf, Projeto , Tecnologia , Competencia , Tipo
+from .forms import FormacaoForm, ProjetoForm , TecnologiaForm , CompetenciaForm 
 
 
 
@@ -231,3 +231,29 @@ def apagar_formacao(request, id):
 def lista_makingof(request):
     entradas = MakingOf.objects.all().order_by('-data')
     return render(request, 'portfolio/lista_makingof.html', {'entradas': entradas})
+
+
+
+# ============ SOBRE ============
+
+def sobre(request):
+    # Tecnologias agrupadas por tipo
+    tipos = Tipo.objects.prefetch_related('tecnologias').all()
+    
+    # Estatísticas para mostrar na página
+    stats = {
+        'projetos': Projeto.objects.count(),
+        'tecnologias': Tecnologia.objects.count(),
+        'competencias': Competencia.objects.count(),
+        'formacoes': Formacao.objects.count(),
+        'makingof': MakingOf.objects.count(),
+    }
+    
+    # Últimas entradas do making-off
+    makingof_recente = MakingOf.objects.all().order_by('-data')[:3]
+    
+    return render(request, 'portfolio/sobre.html', {
+        'tipos': tipos,
+        'stats': stats,
+        'makingof_recente': makingof_recente,
+    })

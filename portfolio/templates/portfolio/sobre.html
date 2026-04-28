@@ -1,0 +1,216 @@
+<!-- portfolio/templates/portfolio/sobre.html -->
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% load markdownify %}
+
+{% block title %}Sobre esta Aplicação{% endblock %}
+
+{% block content %}
+    <div style="max-width: 900px; margin: 0 auto;">
+        <h1 style="margin-bottom: 10px;">Sobre esta Aplicação</h1>
+        <p style="color: #86868b; margin-bottom: 40px; font-size: 1.05em;">
+            Aspectos técnicos e arquiteturais do meu portfolio em Django.
+        </p>
+
+        <!-- Estatísticas rápidas -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 50px;">
+            <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <div style="font-size: 2em; font-weight: 600; color: #0071e3;">{{ stats.projetos }}</div>
+                <div style="font-size: 0.85em; color: #86868b;">Projetos</div>
+            </div>
+            <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <div style="font-size: 2em; font-weight: 600; color: #0071e3;">{{ stats.tecnologias }}</div>
+                <div style="font-size: 0.85em; color: #86868b;">Tecnologias</div>
+            </div>
+            <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <div style="font-size: 2em; font-weight: 600; color: #0071e3;">{{ stats.competencias }}</div>
+                <div style="font-size: 0.85em; color: #86868b;">Competências</div>
+            </div>
+            <div style="background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <div style="font-size: 2em; font-weight: 600; color: #0071e3;">{{ stats.formacoes }}</div>
+                <div style="font-size: 0.85em; color: #86868b;">Formações</div>
+            </div>
+        </div>
+
+        <!-- 1. Arquitetura MVT -->
+        <section style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 30px;">
+            <h2>1. Arquitetura MVT</h2>
+            <p style="margin: 16px 0;">
+                O Django segue o padrão arquitetural <strong>MVT (Model-View-Template)</strong>, 
+                que separa a aplicação em três camadas com responsabilidades distintas:
+            </p>
+
+            <ul style="margin: 16px 0 16px 24px; line-height: 1.8;">
+                <li><strong>Model</strong> (<code>models.py</code>) — Define a estrutura dos dados (tabelas da BD).</li>
+                <li><strong>View</strong> (<code>views.py</code>) — Contém a lógica da aplicação. Recebe pedidos, interage com Models, e devolve respostas.</li>
+                <li><strong>Template</strong> (<code>.html</code>) — Define como os dados são apresentados ao utilizador.</li>
+            </ul>
+
+            <h3 style="margin-top: 24px;">Desenho da Arquitetura</h3>
+            <img src="{% static 'portfolio/imagens/mvt.png' %}" alt="Diagrama da arquitetura MVT" 
+                 style="width: 100%; max-width: 600px; border-radius: 8px; margin: 16px 0;">
+
+            <h3 style="margin-top: 24px;">Fluxo de Informação</h3>
+            <ol style="margin: 16px 0 16px 24px; line-height: 1.8;">
+                <li>O utilizador clica num link no <strong>browser</strong>.</li>
+                <li>O browser envia um pedido HTTP (ex: <code>GET /portfolio/projetos/</code>).</li>
+                <li>O <code>urls.py</code> mapeia o URL para uma <strong>view</strong>.</li>
+                <li>A view chama métodos do <strong>Model</strong> para obter dados (ex: <code>Projeto.objects.all()</code>).</li>
+                <li>O Model consulta a <strong>base de dados</strong> e devolve os dados à view.</li>
+                <li>A view passa os dados a um <strong>template</strong> através do <code>render()</code>.</li>
+                <li>O template renderiza HTML formatado com os dados.</li>
+                <li>O browser recebe o HTML e mostra a página ao utilizador.</li>
+            </ol>
+
+            <h3 style="margin-top: 24px;">Vídeo-Tutorial</h3>
+            <p style="margin: 16px 0;">
+                <em>Em breve: vídeo-tutorial a explicar a criação de uma página com formulário 
+                para criar um novo projeto.</em>
+            </p>
+            <!-- O iframe do vídeo será adicionado num próximo commit -->
+            <!--
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/SEU_VIDEO_ID" 
+                    title="Vídeo-tutorial Django" frameborder="0" allowfullscreen></iframe>
+            -->
+        </section>
+
+        <!-- 2. Modelação -->
+        <section style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 30px;">
+            <h2>2. Modelação</h2>
+            <p style="margin: 16px 0;">
+                A modelação dos dados foi pensada para representar o meu percurso académico, 
+                profissional e técnico, com várias relações entre entidades.
+            </p>
+
+            <h3 style="margin-top: 24px;">Diagrama Entidade-Relação</h3>
+            <img src="{% static 'portfolio/imagens/ER.png' %}" alt="Diagrama Entidade-Relação" 
+                 style="width: 100%; max-width: 800px; border-radius: 8px; margin: 16px 0;">
+
+            <h3 style="margin-top: 24px;">Entidades Principais</h3>
+            <ul style="margin: 16px 0 16px 24px; line-height: 1.8;">
+                <li><strong>Licenciatura</strong> — informação sobre o curso (LEI).</li>
+                <li><strong>UnidadeCurricular</strong> — UCs da licenciatura, lecionadas por docentes.</li>
+                <li><strong>Docente</strong> — professores que lecionam UCs.</li>
+                <li><strong>Projeto</strong> — projetos académicos, associados a uma UC.</li>
+                <li><strong>Tecnologia</strong> — tecnologias usadas (com tipo: Frontend, Backend, etc.).</li>
+                <li><strong>Tipo</strong> — categoria das tecnologias.</li>
+                <li><strong>Competencia</strong> — competências técnicas e soft skills.</li>
+                <li><strong>Formacao</strong> — formações académicas e externas.</li>
+                <li><strong>TFC</strong> — Trabalhos Finais de Curso.</li>
+                <li><strong>ExperienciaProfissional</strong> — experiência profissional.</li>
+                <li><strong>MakingOf</strong> — apontamentos do desenvolvimento.</li>
+            </ul>
+
+            <h3 style="margin-top: 24px;">Principais Relações</h3>
+            <ul style="margin: 16px 0 16px 24px; line-height: 1.8;">
+                <li>Licenciatura <strong>tem</strong> várias UnidadesCurriculares (1:N)</li>
+                <li>UnidadeCurricular é <strong>lecionada por</strong> Docentes (M:N)</li>
+                <li>UnidadeCurricular <strong>origina</strong> Projetos (1:N)</li>
+                <li>Projeto <strong>usa</strong> Tecnologias (M:N)</li>
+                <li>Projeto <strong>trabalha</strong> Competências (M:N)</li>
+                <li>Tecnologia <strong>pertence a</strong> um Tipo (N:1)</li>
+            </ul>
+        </section>
+
+        <!-- 3. Tecnologias -->
+        <section style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 30px;">
+            <h2>3. Tecnologias Usadas</h2>
+            <p style="margin: 16px 0;">
+                As tecnologias estão organizadas por tipo. Esta lista crescerá ao longo do semestre.
+            </p>
+
+            {% for tipo in tipos %}
+                {% if tipo.tecnologias.all %}
+                    <h3 style="margin-top: 24px; color: #0071e3;">{{ tipo.nome }}</h3>
+                    {% if tipo.descricao %}
+                        <p style="color: #86868b; font-size: 0.9em; margin-bottom: 12px;">{{ tipo.descricao }}</p>
+                    {% endif %}
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
+                        {% for tec in tipo.tecnologias.all %}
+                            <div style="background: #f5f5f7; padding: 14px; border-radius: 8px;">
+                                <strong>{{ tec.nome }}</strong>
+                                <p style="font-size: 0.85em; color: #86868b; margin-top: 4px;">
+                                    {{ tec.descricao|truncatewords:15 }}
+                                </p>
+                                {% if tec.website %}
+                                    <a href="{{ tec.website }}" target="_blank" 
+                                       style="font-size: 0.8em; color: #0071e3;">Website →</a>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </section>
+
+        <!-- 4. Estrutura de Páginas -->
+        <section style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 30px;">
+            <h2>4. Estrutura de Páginas</h2>
+            <p style="margin: 16px 0;">
+                Mapa de navegação da aplicação. A partir da página inicial, o utilizador pode 
+                aceder às secções principais e a partir delas a operações CRUD.
+            </p>
+            <img src="{% static 'portfolio/imagens/navegacao.png' %}" alt="Mapa de navegação" 
+                 style="width: 100%; max-width: 800px; border-radius: 8px; margin: 16px 0;">
+        </section>
+
+        <!-- 5. Repositório GitHub -->
+        <section style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 30px;">
+            <h2>5. Repositório GitHub</h2>
+            <p style="margin: 16px 0;">
+                Todo o código está versionado no GitHub. Cada commit representa uma iteração 
+                do desenvolvimento, documentada no Making-Of.
+            </p>
+            <p style="margin: 16px 0;">
+                <a href="https://github.com/a22407332FilipeMonteiro/portfolio-django" target="_blank"
+                   class="btn">📦 Ver Repositório no GitHub →</a>
+            </p>
+
+            <h3 style="margin-top: 24px;">Como uso o Git/GitHub</h3>
+            <ul style="margin: 16px 0 16px 24px; line-height: 1.8;">
+                <li><strong>Commits frequentes</strong> com mensagens descritivas seguindo o padrão <code>feat:</code>, <code>fix:</code>, etc.</li>
+                <li><strong>Branch main</strong> sempre estável.</li>
+                <li><strong>Push</strong> para o remoto após cada iteração testada.</li>
+            </ul>
+
+            <h3 style="margin-top: 24px;">Vantagens</h3>
+            <ul style="margin: 16px 0 16px 24px; line-height: 1.8;">
+                <li>Histórico completo de alterações.</li>
+                <li>Possibilidade de reverter alterações se algo correr mal.</li>
+                <li>Backup automático na cloud.</li>
+                <li>Trabalho desde qualquer máquina (com Codespaces).</li>
+            </ul>
+        </section>
+
+        <!-- 6. Making-Of -->
+        <section style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 30px;">
+            <h2>6. Making-Of</h2>
+            <p style="margin: 16px 0;">
+                O Making-Of documenta o processo de desenvolvimento: dificuldades encontradas, 
+                decisões técnicas, aprendizagens e iterações. Cada entrada está associada a um 
+                commit específico no GitHub.
+            </p>
+
+            {% if makingof_recente %}
+                <h3 style="margin-top: 24px;">Últimas Entradas</h3>
+                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
+                    {% for entrada in makingof_recente %}
+                        <div style="background: #f5f5f7; padding: 16px; border-radius: 8px; border-left: 3px solid #0071e3;">
+                            <h4>{{ entrada.titulo }}</h4>
+                            <p style="color: #86868b; font-size: 0.85em; margin: 4px 0 12px;">
+                                {{ entrada.data|date:"d/m/Y" }} · {{ entrada.tipo }}
+                            </p>
+                            <div style="font-size: 0.95em;">
+                                {{ entrada.descricao|markdownify|truncatewords_html:40 }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <p style="margin-top: 24px;">
+                <a href="{% url 'portfolio:lista_makingof' %}" class="btn">Ver Making-Of completo →</a>
+            </p>
+        </section>
+    </div>
+{% endblock %}
