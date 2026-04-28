@@ -6,7 +6,7 @@
 {% block content %}
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
         <h2>Os meus Projetos</h2>
-        <!-- O botão para criar projeto será adicionado no Commit 2 -->
+        <a href="{% url 'portfolio:criar_projeto' %}" class="btn">+ Novo Projeto</a>
     </div>
 
     {% if projetos %}
