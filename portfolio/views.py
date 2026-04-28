@@ -1,8 +1,8 @@
 # portfolio/views.py
 
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Projeto , Tecnologia , Competencia
-from .forms import ProjetoForm , TecnologiaForm , CompetenciaForm
+from .models import Formacao, Projeto , Tecnologia , Competencia
+from .forms import FormacaoForm, ProjetoForm , TecnologiaForm , CompetenciaForm
 
 
 
@@ -166,4 +166,61 @@ def apagar_competencia(request, id):
         'objeto': competencia,
         'tipo': 'competência',
         'voltar_url': 'portfolio:lista_competencias',
+    })
+
+
+    # ============ FORMAÇÕES ============
+
+def lista_formacoes(request):
+    formacoes = (Formacao.objects
+                 .prefetch_related('competencias', 'tecnologias')
+                 .all())
+    return render(request, 'portfolio/lista_formacoes.html', {'formacoes': formacoes})
+
+
+def criar_formacao(request):
+    if request.method == 'POST':
+        form = FormacaoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('portfolio:lista_formacoes')
+    else:
+        form = FormacaoForm()
+    
+    return render(request, 'portfolio/form_generico.html', {
+        'form': form,
+        'titulo': 'Nova Formação',
+        'voltar_url': 'portfolio:lista_formacoes',
+    })
+
+
+def editar_formacao(request, id):
+    formacao = get_object_or_404(Formacao, id=id)
+
+    if request.method == 'POST':
+        form = FormacaoForm(request.POST, instance=formacao)
+        if form.is_valid():
+            form.save()
+            return redirect('portfolio:lista_formacoes')
+    else:
+        form = FormacaoForm(instance=formacao)
+    
+    return render(request, 'portfolio/form_generico.html', {
+        'form': form,
+        'titulo': f'Editar: {formacao.nome}',
+        'voltar_url': 'portfolio:lista_formacoes',
+    })
+
+
+def apagar_formacao(request, id):
+    formacao = get_object_or_404(Formacao, id=id)
+
+    if request.method == 'POST':
+        formacao.delete()
+        return redirect('portfolio:lista_formacoes')
+    
+    return render(request, 'portfolio/apagar_generico.html', {
+        'objeto': formacao,
+        'tipo': 'formação',
+        'voltar_url': 'portfolio:lista_formacoes',
     })

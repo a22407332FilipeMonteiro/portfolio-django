@@ -1,7 +1,7 @@
 # portfolio/forms.py
 
 from django import forms
-from .models import Competencia, Projeto, Tecnologia
+from .models import Competencia, Formacao, Projeto, Tecnologia
 
 
 class ProjetoForm(forms.ModelForm):
@@ -72,3 +72,30 @@ class CompetenciaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['descricao'].required = False
+
+
+class FormacaoForm(forms.ModelForm):
+    class Meta:
+        model = Formacao
+        fields = [
+            'nome',
+            'instituicao',
+            'data_inicio',
+            'data_fim',
+            'descricao',
+            'competencias',
+            'tecnologias',
+        ]
+        widgets = {
+            'data_inicio': forms.DateInput(attrs={'type': 'date'}),
+            'data_fim': forms.DateInput(attrs={'type': 'date'}),
+            'descricao': forms.Textarea(attrs={'rows': 4}),
+            'competencias': forms.CheckboxSelectMultiple(),
+            'tecnologias': forms.CheckboxSelectMultiple(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['descricao'].required = False
+        self.fields['competencias'].required = False
+        self.fields['tecnologias'].required = False

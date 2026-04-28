@@ -96,3 +96,15 @@ ficheiro para `portfolio/templates/portfolio/lista_competencias.html`.
 **Aprendizagem:** Em Django, o caminho passado ao `render()` deve 
 corresponder à estrutura `app/templates/app/template.html` para 
 evitar conflitos entre templates de apps diferentes com o mesmo nome.
+
+
+## Commit 7 — CRUD Formações | 28/04/2026
+
+**Commit:** `feat(portfolio): adicionar CRUD completo de Formações`
+
+**O que fiz:**
+- Implementei CRUD completo de Formações.
+- Criei `lista_formacoes.html` com layout em "timeline" (lista vertical).
+- Adicionei "Formações" no menu de navegação.
+
+**Marco:** Com este commit, a **secção 2.2 da Ficha 8 fica completa**: as 4 entidades pedidas (Projetos, Tecnologias, Competências, Formações) têm CRUD funcional via formulários.
