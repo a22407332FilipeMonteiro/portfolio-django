@@ -1,7 +1,7 @@
 # portfolio/views.py
 
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Formacao, Projeto , Tecnologia , Competencia
+from .models import Formacao, MakingOf, Projeto , Tecnologia , Competencia
 from .forms import FormacaoForm, ProjetoForm , TecnologiaForm , CompetenciaForm
 
 
@@ -224,3 +224,10 @@ def apagar_formacao(request, id):
         'tipo': 'formação',
         'voltar_url': 'portfolio:lista_formacoes',
     })
+
+
+# ============ MAKING OF ============
+
+def lista_makingof(request):
+    entradas = MakingOf.objects.all().order_by('-data')
+    return render(request, 'portfolio/lista_makingof.html', {'entradas': entradas})

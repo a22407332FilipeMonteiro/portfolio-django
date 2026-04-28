@@ -108,3 +108,22 @@ evitar conflitos entre templates de apps diferentes com o mesmo nome.
 - Adicionei "Formações" no menu de navegação.
 
 **Marco:** Com este commit, a **secção 2.2 da Ficha 8 fica completa**: as 4 entidades pedidas (Projetos, Tecnologias, Competências, Formações) têm CRUD funcional via formulários.
+
+
+
+
+
+## Commit 8 — Setup Markdownify | 28/04/2026
+
+**Commit:** `feat(portfolio): integrar django-markdownify para making-off`
+
+**O que fiz:**
+- Instalei o pacote `django-markdownify` e configurei em `settings.py`.
+- Criei a página de listagem de Making-Of com o filtro `markdownify` aplicado.
+- Adicionei link "Making-Of" no menu.
+
+**Por que usar Markdownify:** Permite escrever apontamentos do making-off em markdown (mais rápido e legível que HTML) e renderizá-los automaticamente em HTML formatado. Os utilizadores veem texto bonito sem ter que escrever HTML manualmente na BD.
+
+**Decisão:** Estendi a `WHITELIST_TAGS` do exemplo da ficha com `code`, `pre`, `br` e `hr` para suportar blocos de código nos apontamentos técnicos.
+
+
