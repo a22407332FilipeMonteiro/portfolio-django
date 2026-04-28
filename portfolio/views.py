@@ -1,8 +1,8 @@
 # portfolio/views.py
 
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Projeto , Tecnologia
-from .forms import ProjetoForm , TecnologiaForm
+from .models import Projeto , Tecnologia , Competencia
+from .forms import ProjetoForm , TecnologiaForm , CompetenciaForm
 
 
 
@@ -110,4 +110,60 @@ def apagar_tecnologia(request, id):
         'objeto': tecnologia,
         'tipo': 'tecnologia',
         'voltar_url': 'portfolio:lista_tecnologias',
+    })
+
+
+
+# ============ COMPETÊNCIAS ============
+
+def lista_competencias(request):
+    competencias = Competencia.objects.all()
+    return render(request, 'portfolio/lista_competencias.html', {'competencias': competencias})
+
+
+def criar_competencia(request):
+    if request.method == 'POST':
+        form = CompetenciaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('portfolio:lista_competencias')
+    else:
+        form = CompetenciaForm()
+    
+    return render(request, 'portfolio/form_generico.html', {
+        'form': form,
+        'titulo': 'Nova Competência',
+        'voltar_url': 'portfolio:lista_competencias',
+    })
+
+
+def editar_competencia(request, id):
+    competencia = get_object_or_404(Competencia, id=id)
+
+    if request.method == 'POST':
+        form = CompetenciaForm(request.POST, instance=competencia)
+        if form.is_valid():
+            form.save()
+            return redirect('portfolio:lista_competencias')
+    else:
+        form = CompetenciaForm(instance=competencia)
+    
+    return render(request, 'portfolio/form_generico.html', {
+        'form': form,
+        'titulo': f'Editar: {competencia.nome}',
+        'voltar_url': 'portfolio:lista_competencias',
+    })
+
+
+def apagar_competencia(request, id):
+    competencia = get_object_or_404(Competencia, id=id)
+
+    if request.method == 'POST':
+        competencia.delete()
+        return redirect('portfolio:lista_competencias')
+    
+    return render(request, 'portfolio/apagar_generico.html', {
+        'objeto': competencia,
+        'tipo': 'competência',
+        'voltar_url': 'portfolio:lista_competencias',
     })

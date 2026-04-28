@@ -1,0 +1,51 @@
+<!-- portfolio/templates/portfolio/lista_competencias.html -->
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Competências{% endblock %}
+
+{% block content %}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h2>Competências</h2>
+        <a href="{% url 'portfolio:criar_competencia' %}" class="btn">+ Nova Competência</a>
+    </div>
+
+    {% if competencias %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+            {% for comp in competencias %}
+                <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    <h3>{{ comp.nome }}</h3>
+                    <p style="color: #86868b; font-size: 0.85em; margin: 6px 0;">
+                        {{ comp.tipo }}
+                    </p>
+                    <div style="margin: 12px 0;">
+                        <span style="font-size: 0.8em; color: #86868b;">Nível:</span>
+                        <div style="display: inline-block; margin-left: 6px;">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= comp.nivel %}
+                                    <span style="color: #0071e3;">●</span>
+                                {% else %}
+                                    <span style="color: #d2d2d7;">○</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p style="font-size: 0.9em; margin-bottom: 12px;">
+                        {{ comp.descricao|truncatewords:15 }}
+                    </p>
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <a href="{% url 'portfolio:editar_competencia' comp.id %}" 
+                           class="btn btn-secondary" 
+                           style="font-size: 0.85em; padding: 6px 14px;">Editar</a>
+                        <a href="{% url 'portfolio:apagar_competencia' comp.id %}" 
+                           class="btn btn-danger" 
+                           style="font-size: 0.85em; padding: 6px 14px;">Apagar</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p style="text-align: center; color: #86868b; padding: 40px;">
+            Ainda não há competências. Adiciona a primeira!
+        </p>
+    {% endif %}
+{% endblock %}

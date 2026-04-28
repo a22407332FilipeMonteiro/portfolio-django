@@ -1,7 +1,7 @@
 # portfolio/forms.py
 
 from django import forms
-from .models import Projeto, Tecnologia
+from .models import Competencia, Projeto, Tecnologia
 
 
 class ProjetoForm(forms.ModelForm):
@@ -59,3 +59,16 @@ class TecnologiaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['descricao'].required = False
         self.fields['logo'].required = False
+
+
+class CompetenciaForm(forms.ModelForm):
+    class Meta:
+        model = Competencia
+        fields = ['nome', 'tipo', 'nivel', 'descricao']
+        widgets = {
+            'descricao': forms.Textarea(attrs={'rows': 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['descricao'].required = False

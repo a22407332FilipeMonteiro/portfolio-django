@@ -75,3 +75,24 @@
 **Decisão importante:** Em vez de criar templates específicos para cada classe (`form_tecnologia.html`, `apagar_tecnologia.html`, etc.), criei templates genéricos que recebem `titulo`, `objeto` e `voltar_url` por contexto. Isto vai poupar muito código nos próximos CRUDs (Competências e Formações).
 
 **Vantagem do Django:** O facto de o `ModelForm` gerar o formulário automaticamente a partir do modelo, e os templates genéricos iterarem sobre `form.fields`, permite reutilizar 100% do código entre diferentes entidades. Só precisei de definir o form e a view — o resto é genérico.
+
+
+## Commit 6 — CRUD Competências | 28/04/2026
+
+**Commit:** `feat(portfolio): adicionar CRUD completo de Competências`
+
+**O que fiz:**
+- Implementei CRUD completo de Competências.
+- Criei `lista_competencias.html` com indicador visual de nível (bolas ● / ○).
+- Adicionei "Competências" no menu de navegação.
+
+**Vantagem da reutilização:** Como já tinha os templates genéricos (`form_generico.html` e `apagar_generico.html`) do commit anterior, **só precisei criar 1 template novo** (a listagem) em vez de 3. O Django mostra aqui a sua força: com `ModelForm` + templates genéricos + views simples, replicar o CRUD para uma nova entidade leva poucos minutos.
+
+**Dificuldade:** Inicialmente criei o `lista_competencias.html` 
+diretamente em `portfolio/templates/` (sem a subpasta `portfolio/`), 
+o que fazia com que o Django retornasse 404. Resolvi movendo o 
+ficheiro para `portfolio/templates/portfolio/lista_competencias.html`. 
+
+**Aprendizagem:** Em Django, o caminho passado ao `render()` deve 
+corresponder à estrutura `app/templates/app/template.html` para 
+evitar conflitos entre templates de apps diferentes com o mesmo nome.
