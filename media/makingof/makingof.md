@@ -47,4 +47,16 @@
 
 
 
+## Commit 4 — Apagar Projeto | 28/04/2026
 
+**Commit:** `feat(portfolio): adicionar eliminação de projetos`
+
+**O que fiz:**
+- Adicionei a view `apagar_projeto` com confirmação.
+- Adicionei a rota `projetos/<int:id>/apagar/`.
+- Criei o template `apagar_projeto.html` com confirmação.
+- Adicionei botão "Apagar" em cada cartão.
+
+**Decisão:** Em vez de apagar diretamente num link (GET), usei uma página intermédia com formulário POST. Mais seguro: protege contra cliques acidentais e respeita o princípio REST de que pedidos GET não devem alterar dados.
+
+**CRUD completo:** Com este commit, o CRUD dos Projetos fica completo (Create, Read, Update, Delete).

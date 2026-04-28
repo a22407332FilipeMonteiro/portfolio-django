@@ -30,6 +30,9 @@
                         <a href="{% url 'portfolio:editar_projeto' projeto.id %}" 
                            class="btn btn-secondary" 
                            style="font-size: 0.85em; padding: 6px 14px;">Editar</a>
+                        <a href="{% url 'portfolio:apagar_projeto' projeto.id %}" 
+                            class="btn btn-danger" 
+                            style="font-size: 0.85em; padding: 6px 14px;">Apagar</a>
                     </div>
                 </div>
             {% endfor %}

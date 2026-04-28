@@ -43,3 +43,14 @@ def editar_projeto(request, id):
         'form': form,
         'titulo': f'Editar: {projeto.nome}',
     })
+
+def apagar_projeto(request, id):
+    projeto = get_object_or_404(Projeto, id=id)
+
+    if request.method == 'POST':
+        projeto.delete()
+        return redirect('portfolio:lista_projetos')
+    
+    return render(request, 'portfolio/apagar_projeto.html', {
+        'projeto': projeto,
+    })
