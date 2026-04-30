@@ -121,7 +121,7 @@ class Projeto(models.Model):
 
     class Meta:
         verbose_name = 'Projeto'
-        verbose_name_plural = 'Projetos'
+        verbose_name_plural = 'Projetos'      
 
 
     def __str__(self):

@@ -5,7 +5,7 @@ from .models import Formacao, MakingOf, Projeto , Tecnologia , Competencia , Tip
 from .forms import FormacaoForm, ProjetoForm , TecnologiaForm , CompetenciaForm 
 
 
-
+# =========== PROJETOS ============
 
 def lista_projetos(request):
     projetos = (Projeto.objects

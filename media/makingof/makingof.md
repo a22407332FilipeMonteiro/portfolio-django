@@ -145,3 +145,21 @@ evitar conflitos entre templates de apps diferentes com o mesmo nome.
 **Aprendizagem:** Aprendi a criar **migrações de dados** (`RunPython`). É melhor que criar manualmente no admin porque os dados ficam versionados no código e funcionam em qualquer ambiente.
 
 
+
+Falta o 10 (Não esquecer) 
+
+
+
+## Commit 11 — Iframe do Vídeo-Tutorial | 29/04/2026
+
+**Commit:** `feat(portfolio): adicionar iframe do vídeo-tutorial na página Sobre`
+
+**O que fiz:**
+- Embebi o vídeo-tutorial (https://youtu.be/vkyuVM4F4v4) na secção "Arquitetura MVT" da página "Sobre".
+- Configurei o iframe com wrapper responsivo (rácio 16:9) para manter as proporções em qualquer tamanho de ecrã.
+- Adicionei link alternativo para abrir o vídeo no YouTube.
+
+**Aprendizagem:** O YouTube exige o formato `embed/VIDEO_ID` para iframes (em vez do `youtu.be/VIDEO_ID` partilhado). Para responsividade, usei a técnica do `padding-bottom: 56.25%` (16:9) num wrapper com `position: relative`, em vez de definir uma altura fixa.
+
+**Marco:** Com este commit, **a Ficha 8 fica completa** ✅ — todos os pontos das secções 2.2, 2.3 e 2.4 foram implementados.
+

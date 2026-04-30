@@ -16,7 +16,6 @@ class ProjetoForm(forms.ModelForm):
             'demo',
             'imagem',
             'video',
-            'destaque',
             'unidade_curricular',
             'tecnologias',
             'competencias',
@@ -24,7 +23,7 @@ class ProjetoForm(forms.ModelForm):
         widgets = {
             'data_inicio': forms.DateInput(attrs={'type': 'date'}),
             'data_fim': forms.DateInput(attrs={'type': 'date'}),
-            'descricao': forms.Textarea(attrs={'rows': 4}),
+            'descricao': forms.Textarea(attrs={'rows' : 4}),
             'tecnologias': forms.CheckboxSelectMultiple(),
             'competencias': forms.CheckboxSelectMultiple(),
         }

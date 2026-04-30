@@ -25,6 +25,11 @@
                         {% for tec in projeto.tecnologias.all %}
                             <span style="display: inline-block; background: #0071e3; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.75em; margin: 2px;">{{ tec.nome }}</span>
                         {% endfor %}
+
+                        {% for tec in projeto.competencias.all %}
+                            <span style="display: inline-block; background: #fedb17; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.75em; margin: 2px;">{{ tec.nome }}</span>
+                        {% endfor %}
+
                     </div>
                     <div style="display: flex; gap: 8px; margin-top: 12px;">
                         <a href="{% url 'portfolio:editar_projeto' projeto.id %}" 
