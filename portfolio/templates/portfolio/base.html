@@ -26,6 +26,7 @@
     <header>
         <h1>Portfolio - Filipe Monteiro</h1>
         <nav>
+            <a href="{% url 'portfolio:home' %}">Início</a>
             <a href="{% url 'portfolio:lista_projetos' %}">Projetos</a>
             <a href="{% url 'portfolio:lista_tecnologias' %}">Tecnologias</a>
             <a href="{% url 'portfolio:lista_competencias' %}">Competências</a>
@@ -37,6 +38,6 @@
     <main>
         {% block content %}{% endblock %}
     </main>
-    <footer>© 2026</footer>
+    <footer>Filipe Monteiro | © 2026</footer>
 </body>
 </html>

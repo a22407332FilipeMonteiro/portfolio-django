@@ -257,3 +257,11 @@ def sobre(request):
         'stats': stats,
         'makingof_recente': makingof_recente,
     })
+
+
+
+# ============ HOME ============
+
+
+def home(request):
+    return render(request, 'portfolio/home.html')
