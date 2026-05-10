@@ -1,0 +1,37 @@
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Link Mágico{% endblock %}
+
+{% block content %}
+    <div style="max-width: 450px; margin: 60px auto;">
+        <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <h2 style="margin-bottom: 12px; text-align: center;">✨ Link Mágico</h2>
+            <p style="color: #86868b; text-align: center; margin-bottom: 24px; font-size: 0.9em;">
+                Recebe um link no teu email para entrares sem password.
+            </p>
+
+            {% if mensagem %}
+                <div style="background: {% if erro %}#ffebee{% else %}#e8f5e9{% endif %}; 
+                            color: {% if erro %}#c62828{% else %}#2e7d32{% endif %}; 
+                            padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em;">
+                    {{ mensagem }}
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <div style="margin-bottom: 24px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">Email</label>
+                    <input type="email" name="email" required
+                           placeholder="teu@email.com"
+                           style="width: 100%; padding: 10px 12px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 0.95em;">
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Enviar Link Mágico</button>
+            </form>
+
+            <p style="margin-top: 20px; text-align: center; font-size: 0.9em; color: #86868b;">
+                <a href="{% url 'accounts:login' %}" style="color: #0071e3;">← Voltar ao Login</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

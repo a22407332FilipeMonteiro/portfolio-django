@@ -1,0 +1,15 @@
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Link Inválido{% endblock %}
+
+{% block content %}
+    <div style="max-width: 450px; margin: 60px auto;">
+        <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center;">
+            <h2 style="margin-bottom: 16px; color: #c62828;">⚠️ Link Inválido</h2>
+            <p style="margin-bottom: 24px; color: #86868b;">
+                {{ mensagem }}
+            </p>
+            <a href="{% url 'accounts:magic_link' %}" class="btn">Pedir Novo Link</a>
+        </div>
+    </div>
+{% endblock %}

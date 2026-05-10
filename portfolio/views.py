@@ -1,8 +1,13 @@
 # portfolio/views.py
-
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Formacao, MakingOf, Projeto , Tecnologia , Competencia , Tipo
-from .forms import FormacaoForm, ProjetoForm , TecnologiaForm , CompetenciaForm 
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .models import Formacao, MakingOf, Projeto, Tecnologia, Competencia, Tipo
+from .forms import FormacaoForm, ProjetoForm, TecnologiaForm, CompetenciaForm
+
+
+# função que vai verificar se o utilizador é ou não um gestor
+def is_gestor(user):
+    return user.is_authenticated and user.groups.filter(name='gestor-portfolio').exists()
 
 
 # =========== PROJETOS ============
@@ -15,6 +20,8 @@ def lista_projetos(request):
     return render(request, 'portfolio/lista_projetos.html', {'projetos': projetos})
 
 
+@login_required
+@user_passes_test(is_gestor)
 def criar_projeto(request):
     if request.method == 'POST':
         form = ProjetoForm(request.POST, request.FILES)
@@ -30,9 +37,10 @@ def criar_projeto(request):
     })
 
 
+@login_required
+@user_passes_test(is_gestor)
 def editar_projeto(request, id):
     projeto = get_object_or_404(Projeto, id=id)
-
     if request.method == 'POST':
         form = ProjetoForm(request.POST, request.FILES, instance=projeto)
         if form.is_valid():
@@ -46,9 +54,11 @@ def editar_projeto(request, id):
         'titulo': f'Editar: {projeto.nome}',
     })
 
+
+@login_required
+@user_passes_test(is_gestor)
 def apagar_projeto(request, id):
     projeto = get_object_or_404(Projeto, id=id)
-
     if request.method == 'POST':
         projeto.delete()
         return redirect('portfolio:lista_projetos')
@@ -65,6 +75,8 @@ def lista_tecnologias(request):
     return render(request, 'portfolio/lista_tecnologias.html', {'tecnologias': tecnologias})
 
 
+@login_required
+@user_passes_test(is_gestor)
 def criar_tecnologia(request):
     if request.method == 'POST':
         form = TecnologiaForm(request.POST, request.FILES)
@@ -81,9 +93,10 @@ def criar_tecnologia(request):
     })
 
 
+@login_required
+@user_passes_test(is_gestor)
 def editar_tecnologia(request, id):
     tecnologia = get_object_or_404(Tecnologia, id=id)
-
     if request.method == 'POST':
         form = TecnologiaForm(request.POST, request.FILES, instance=tecnologia)
         if form.is_valid():
@@ -99,9 +112,10 @@ def editar_tecnologia(request, id):
     })
 
 
+@login_required
+@user_passes_test(is_gestor)
 def apagar_tecnologia(request, id):
     tecnologia = get_object_or_404(Tecnologia, id=id)
-
     if request.method == 'POST':
         tecnologia.delete()
         return redirect('portfolio:lista_tecnologias')
@@ -113,7 +127,6 @@ def apagar_tecnologia(request, id):
     })
 
 
-
 # ============ COMPETÊNCIAS ============
 
 def lista_competencias(request):
@@ -121,6 +134,8 @@ def lista_competencias(request):
     return render(request, 'portfolio/lista_competencias.html', {'competencias': competencias})
 
 
+@login_required
+@user_passes_test(is_gestor)
 def criar_competencia(request):
     if request.method == 'POST':
         form = CompetenciaForm(request.POST)
@@ -137,9 +152,10 @@ def criar_competencia(request):
     })
 
 
+@login_required
+@user_passes_test(is_gestor)
 def editar_competencia(request, id):
     competencia = get_object_or_404(Competencia, id=id)
-
     if request.method == 'POST':
         form = CompetenciaForm(request.POST, instance=competencia)
         if form.is_valid():
@@ -155,9 +171,10 @@ def editar_competencia(request, id):
     })
 
 
+@login_required
+@user_passes_test(is_gestor)
 def apagar_competencia(request, id):
     competencia = get_object_or_404(Competencia, id=id)
-
     if request.method == 'POST':
         competencia.delete()
         return redirect('portfolio:lista_competencias')
@@ -169,7 +186,7 @@ def apagar_competencia(request, id):
     })
 
 
-    # ============ FORMAÇÕES ============
+# ============ FORMAÇÕES ============
 
 def lista_formacoes(request):
     formacoes = (Formacao.objects
@@ -178,6 +195,8 @@ def lista_formacoes(request):
     return render(request, 'portfolio/lista_formacoes.html', {'formacoes': formacoes})
 
 
+@login_required
+@user_passes_test(is_gestor)
 def criar_formacao(request):
     if request.method == 'POST':
         form = FormacaoForm(request.POST)
@@ -194,9 +213,10 @@ def criar_formacao(request):
     })
 
 
+@login_required
+@user_passes_test(is_gestor)
 def editar_formacao(request, id):
     formacao = get_object_or_404(Formacao, id=id)
-
     if request.method == 'POST':
         form = FormacaoForm(request.POST, instance=formacao)
         if form.is_valid():
@@ -212,9 +232,10 @@ def editar_formacao(request, id):
     })
 
 
+@login_required
+@user_passes_test(is_gestor)
 def apagar_formacao(request, id):
     formacao = get_object_or_404(Formacao, id=id)
-
     if request.method == 'POST':
         formacao.delete()
         return redirect('portfolio:lista_formacoes')
@@ -229,9 +250,8 @@ def apagar_formacao(request, id):
 # ============ MAKING OF ============
 
 def lista_makingof(request):
-    entradas = MakingOf.objects.all().order_by('-data')
+    entradas = MakingOf.objects.all().order_by('data')
     return render(request, 'portfolio/lista_makingof.html', {'entradas': entradas})
-
 
 
 # ============ SOBRE ============
@@ -259,9 +279,7 @@ def sobre(request):
     })
 
 
-
 # ============ HOME ============
-
 
 def home(request):
     return render(request, 'portfolio/home.html')

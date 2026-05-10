@@ -1,0 +1,54 @@
+{% extends "portfolio/base.html" %}
+{% block title %}Artigos{% endblock %}
+
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; flex-wrap:wrap; gap:12px;">
+    <div>
+        <h2 style="font-size:2em; font-weight:700;">Artigos</h2>
+        <p style="color:#86868b; margin-top:4px;">Tecnologia, soft-skills e muito mais.</p>
+    </div>
+    {% if is_autor %}
+        <a href="{% url 'artigos:criar_artigo' %}" class="btn">+ Novo Artigo</a>
+    {% endif %}
+</div>
+
+{% if artigos %}
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:24px;">
+        {% for artigo in artigos %}
+        <div style="background:white; border-radius:14px; box-shadow:0 2px 10px rgba(0,0,0,0.06); overflow:hidden; display:flex; flex-direction:column;">
+            {% if artigo.fotografia %}
+                <img src="{{ artigo.fotografia.url }}" alt="{{ artigo.titulo }}"
+                     style="width:100%; height:190px; object-fit:cover;">
+            {% else %}
+                <div style="height:8px; background:linear-gradient(90deg,#0071e3,#34c759);"></div>
+            {% endif %}
+
+            <div style="padding:22px; flex:1; display:flex; flex-direction:column; gap:10px;">
+                <h3 style="font-size:1.15em; font-weight:600; line-height:1.35;">{{ artigo.titulo }}</h3>
+
+                <p style="color:#86868b; font-size:0.82em;">
+                    Por <strong style="color:#1d1d1f;">{{ artigo.autor.get_full_name|default:artigo.autor.username }}</strong>
+                    &middot; {{ artigo.data_criacao|date:"d M Y" }}
+                </p>
+
+                <p style="color:#3d3d3f; font-size:0.92em; line-height:1.55; flex:1;">
+                    {{ artigo.texto|truncatewords:25 }}
+                </p>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                    <span style="color:#86868b; font-size:0.85em;">&#10084; {{ artigo.likes.count }}</span>
+                    <a href="{% url 'artigos:detalhe_artigo' artigo.id %}" class="btn" style="padding:8px 16px; font-size:0.9em;">Ler mais</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div style="text-align:center; padding:60px 20px; color:#86868b;">
+        <p style="font-size:1.1em;">Ainda não há artigos publicados.</p>
+        {% if is_autor %}
+            <a href="{% url 'artigos:criar_artigo' %}" class="btn" style="margin-top:20px;">Publica o primeiro</a>
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}

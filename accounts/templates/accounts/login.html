@@ -1,0 +1,51 @@
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div style="max-width: 400px; margin: 60px auto;">
+        <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <h2 style="margin-bottom: 24px; text-align: center;">Login</h2>
+
+            {% if mensagem %}
+                <div style="background: #ffebee; color: #c62828; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9em;">
+                    {{ mensagem }}
+                </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">Username</label>
+                    <input type="text" name="username" required
+                           style="width: 100%; padding: 10px 12px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 0.95em;">
+                </div>
+                <div style="margin-bottom: 24px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9em;">Password</label>
+                    <input type="password" name="password" required
+                           style="width: 100%; padding: 10px 12px; border: 1px solid #d2d2d7; border-radius: 8px; font-size: 0.95em;">
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Entrar</button>
+            </form>
+
+            <!-- Separador -->
+            <div style="display: flex; align-items: center; margin: 30px 0; color: #86868b; font-size: 0.85em;">
+                <div style="flex: 1; height: 1px; background: #d2d2d7;"></div>
+                <span style="padding: 0 12px;">OU</span>
+                <div style="flex: 1; height: 1px; background: #d2d2d7;"></div>
+            </div>
+
+            <!-- Magic Link -->
+            <a href="{% url 'accounts:magic_link' %}" 
+               class="btn btn-secondary" 
+               style="width: 100%; text-align: center; display: block;">
+                ✨ Entrar com Link Mágico
+            </a>
+
+            <p style="margin-top: 20px; text-align: center; font-size: 0.9em; color: #86868b;">
+                Ainda não tens conta? 
+                <a href="{% url 'accounts:registo' %}" style="color: #0071e3;">Regista-te</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

@@ -163,3 +163,21 @@ Falta o 10 (Não esquecer)
 
 **Marco:** Com este commit, **a Ficha 8 fica completa** ✅ — todos os pontos das secções 2.2, 2.3 e 2.4 foram implementados.
 
+
+
+## Commit 12 — Autenticação completa e App Artigos | 09/05/2026
+
+**Commit:** `feat(accounts, artigos): adicionar autenticação e CRUD de artigos`
+
+**O que fiz:**
+- Criei a app `accounts` com login, logout, registo e magic link.
+- Criei a app `artigos` com CRUD de artigos, likes e comentários.
+- Protegi as views de escrita do portfolio com o grupo `gestor-portfolio`.
+- Adicionei o link Artigos no menu e mostro o utilizador autenticado.
+
+**Dificuldade:** O magic link estava a aparecer partido no terminal — o Django 6.0.3 aplica `quoted-printable` ao corpo do email, partindo URLs longos com `=` a cada 76 caracteres (ex: `magic-log=in/TOKEN`). Resolvi com uma classe `_Email7bit` que força o encoding `7bit`, mantendo o link inteiro.
+
+**Decisão:** Usei `UniqueConstraint` com `condition=Q(...)` no modelo `Like` para permitir likes de utilizadores anónimos via `session_key`, sem duplicados. Para o grupo `autores`, usei o sinal `post_migrate` em vez de uma migração de dados — corre automaticamente em qualquer ambiente.
+
+**Aprendizagem:** Separar autenticação numa app própria (`accounts`) segue o princípio de responsabilidade única e facilita reutilização noutros projetos. Aprendi também que `UniqueConstraint` condicional permite restrições únicas parciais no SQLite — útil para casos como likes (1 por user OU 1 por sessão).
+

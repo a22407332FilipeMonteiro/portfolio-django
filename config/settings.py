@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,10 @@ SECRET_KEY = "django-insecure-qk_u7^97lcroc@2_7)_0ss0gvs9!py%s_u!-xcss4p45u^*wdp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.app.github.dev']
+
+# Necessário para POST requests (CSRF) via HTTPS no Codespaces
+CSRF_TRUSTED_ORIGINS = ['https://*.app.github.dev']
 
 
 # Application definition
@@ -40,7 +44,12 @@ INSTALLED_APPS = [
     "portfolio",
     "escola",
     "markdownify.apps.MarkdownifyConfig",
+    'accounts',
+    'artigos',
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -144,3 +153,15 @@ MARKDOWNIFY = {
         ],
     }
 }
+
+# Autenticaçao
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'portfolio:home'
+LOGOUT_REDIRECT_URL = 'portfolio:home'
+
+
+
+# Email — configuração para desenvolvimento
+# O email será impresso no terminal em vez de ser realmente enviado
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'portfolio@filipe.com'
