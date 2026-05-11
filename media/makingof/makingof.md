@@ -181,3 +181,19 @@ Falta o 10 (Não esquecer)
 
 **Aprendizagem:** Separar autenticação numa app própria (`accounts`) segue o princípio de responsabilidade única e facilita reutilização noutros projetos. Aprendi também que `UniqueConstraint` condicional permite restrições únicas parciais no SQLite — útil para casos como likes (1 por user OU 1 por sessão).
 
+
+
+## Commit 13 — Migração para PostgreSQL na Neon | 10/05/2026
+
+**Commit:** `feat(config): migrar base de dados para PostgreSQL na Neon`
+
+**O que fiz:**
+- Configurei o projeto para usar PostgreSQL na cloud (Neon) em vez de SQLite local.
+- Usei o `django-environ` para ler a `DATABASE_URL` do ficheiro `.env`.
+- Migrei os dados existentes via `dumpdata`/`loaddata`.
+
+**Dificuldade:** O `.env` estava sem o prefixo `DATABASE_URL=`, o que fazia o Django falhar a ler a connection string. Resolvi corrigindo a sintaxe (`CHAVE=valor` numa só linha).
+
+**Decisão:** Adicionei `dados.json` e `.env` ao `.gitignore` por questões de segurança e portabilidade — credenciais nunca devem ir para o repositório.
+
+**Aprendizagem:** A separação **código vs configuração** é uma boa prática. O mesmo código corre em desenvolvimento (SQLite/PostgreSQL local) e produção (Neon) — só muda a variável de ambiente.
