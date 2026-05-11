@@ -53,10 +53,9 @@ INSTALLED_APPS = [
     "markdownify.apps.MarkdownifyConfig",
     'accounts',
     'artigos',
+    'cloudinary',              
+    'cloudinary_storage',
 ]
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -170,3 +169,20 @@ LOGOUT_REDIRECT_URL = 'portfolio:home'
 # O email será impresso no terminal em vez de ser realmente enviado
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'portfolio@filipe.com'
+
+# Cloudinary - configuração para armazenamento de media na cloud
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': env('CLOUDINARY_API_KEY'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET'),
+}
+
+# Storages - usar Cloudinary para media files
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}

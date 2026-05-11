@@ -197,3 +197,19 @@ Falta o 10 (Não esquecer)
 **Decisão:** Adicionei `dados.json` e `.env` ao `.gitignore` por questões de segurança e portabilidade — credenciais nunca devem ir para o repositório.
 
 **Aprendizagem:** A separação **código vs configuração** é uma boa prática. O mesmo código corre em desenvolvimento (SQLite/PostgreSQL local) e produção (Neon) — só muda a variável de ambiente.
+
+
+## Commit 14 — Migração de media para Cloudinary | 10/05/2026
+
+**Commit:** `feat(config): migrar armazenamento de media para Cloudinary`
+
+**O que fiz:**
+- Configurei o `cloudinary_storage` como backend de media no Django.
+- Migrei as imagens existentes via script (`migra_ficheiros.py`).
+- Removi configuração local (`MEDIA_URL`, `MEDIA_ROOT`, `static()`).
+
+**Dificuldade:** Como o storage padrão já era Cloudinary, o `obj.imagem.path` deixou de funcionar (Cloudinary não tem `path`, só `url`). Resolvi construindo o caminho local manualmente com `os.path.join(MEDIA_ROOT, campo.name)`.
+
+**Decisão:** Mantive as imagens **estáticas** (retrato, diagramas MVT/ER) em `STATIC_ROOT`. O Cloudinary só guarda **media** (uploads dinâmicos). Estáticos são parte do código, não fazem sentido ir para a cloud.
+
+**Aprendizagem:** A separação `MEDIA` vs `STATIC` é importante. `STATIC` é versionado no Git e servido como ficheiro fixo; `MEDIA` é dinâmico (uploads dos utilizadores) e fica em armazenamento externo como Cloudinary ou S3.
